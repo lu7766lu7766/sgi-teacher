@@ -7,7 +7,8 @@ import vue from "@vitejs/plugin-vue"
 export default defineConfig({
   base: "sgi-teacher-site",
   build: {
-    outDir: "../sgi-teacher-site",
+    target: "es6",
+    outDir: "docs",
   },
   plugins: [vue()],
   resolve: {

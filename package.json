@@ -11,8 +11,6 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
-    "downloadjs": "^1.4.7",
-    "html-to-image": "^1.11.11",
     "html2canvas": "^1.4.1",
     "sass": "^1.70.0",
     "vue": "^3.3.11"

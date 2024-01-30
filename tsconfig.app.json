@@ -8,6 +8,13 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "module": "es2015",
+    "target": "es2015",
+    "lib": [
+      "ES5",
+      "ES6",
+      "ES2015"
+    ],
   }
 }
