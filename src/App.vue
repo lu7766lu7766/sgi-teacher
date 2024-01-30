@@ -5,7 +5,7 @@
     </select>
   </header> -->
 
-  <div class="relative" ref="containerRef">
+  <div id="downPoster" class="relative" ref="containerRef">
     <img src="/bg0.png" class="w-full" />
     <textarea class="input-area absolute w-[55vw] left-[21vw] top-[21vw] h-[35vw]" placeholder="click me to type" v-model="initData.note1"></textarea>
     <textarea class="input-area absolute w-[55vw] left-[23vw] top-[86vw] h-[35vw]" placeholder="click me to type" v-model="initData.note2"></textarea>
@@ -16,10 +16,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from "vue"
-import { toPng } from "html-to-image"
-import download from "downloadjs"
-
+import { ref, reactive } from "vue"
+// import { toPng } from "html-to-image"
+// import download from "downloadjs"
+import html2canvas from "html2canvas"
 const containerRef = ref(null)
 const initData = reactive({
   // options: [
@@ -34,9 +34,37 @@ const initData = reactive({
   // bgCss: computed(() => `url(${initData.template.bg})`),
 })
 
-const exportImage = async () => {
-  const dataUrl = await toPng(containerRef.value)
-  download(dataUrl, "sgi-teacher.png")
+const exportImage = () => {
+  // const dataUrl = await toPng(containerRef.value)
+  // console.log(dataUrl)
+  // download(dataUrl, "sgi-teacher.png")
+  html2canvas(document.querySelector("#downPoster"), { useCORS: true }).then((canvas: any) => {
+    const base64 = canvas.toDataURL().replace(/^data:image\/(png|jpg);base64,/, "")
+    const base64img = `data:image/png;base64,${base64}`
+    downloadBase64(base64img, "sgi-teacher.png")
+  })
+}
+
+/** 下载图片 */
+const downloadBase64 = (content: string, fileName: string) => {
+  var base64ToBlob = function (code: any) {
+    let parts = code.split(";base64,")
+    let contentType = parts[0].split(":")[1]
+    let raw = window.atob(parts[1])
+    let rawLength = raw.length
+    let uInt8Array = new Uint8Array(rawLength)
+    for (let i = 0; i < rawLength; ++i) {
+      uInt8Array[i] = raw.charCodeAt(i)
+    }
+    return new Blob([uInt8Array], {
+      type: contentType,
+    })
+  }
+  let aLink = document.createElement("a")
+  let blob = base64ToBlob(content)
+  aLink.download = fileName + ".png"
+  aLink.href = URL.createObjectURL(blob)
+  aLink.click()
 }
 </script>
 
