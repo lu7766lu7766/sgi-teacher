@@ -20,6 +20,7 @@
   </div>
   <div v-else>
     <img :src="initData.base64img" />
+    <div class="text-center">請右鍵或長按另存圖片</div>
     <div class="flex justify-center">
       <button type="button" class="bg-gray-400 text-white px-4 py-2 rounded mr-4" @click="() => (initData.isConvert = false)">Back</button>
     </div>
@@ -27,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue"
+import { reactive } from "vue"
 import html2canvas from "html2canvas"
 const initData = reactive({
   note1: "",
