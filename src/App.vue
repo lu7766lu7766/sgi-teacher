@@ -1,17 +1,7 @@
 <template>
   <div v-if="!initData.isConvert">
     <div id="container" class="relative">
-      <img src="/bg0.png" class="w-full" />
-      <textarea
-        class="input-area absolute w-[55vw] left-[21vw] top-[21vw] h-[35vw]"
-        placeholder="click me to type"
-        v-model="initData.note1"
-      ></textarea>
-      <textarea
-        class="input-area absolute w-[55vw] left-[23vw] top-[86vw] h-[35vw]"
-        placeholder="click me to type"
-        v-model="initData.note2"
-      ></textarea>
+      <BG0 />
     </div>
     <div class="flex justify-center">
       <button type="button" class="bg-gray-400 text-white px-4 py-2 rounded mr-4" @click="exportImage">Export</button>
@@ -30,9 +20,9 @@
 <script setup lang="ts">
 import { reactive } from "vue"
 import html2canvas from "html2canvas"
+import BG0 from "./components/BG0.vue"
+
 const initData = reactive({
-  note1: "",
-  note2: "",
   base64img: "",
   isConvert: false,
 })
