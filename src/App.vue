@@ -1,6 +1,6 @@
 <template>
   <div v-if="!initData.isConvert">
-    <div id="downPoster" class="relative" ref="containerRef">
+    <div id="container" class="relative">
       <img src="/bg0.png" class="w-full" />
       <textarea
         class="input-area absolute w-[55vw] left-[21vw] top-[21vw] h-[35vw]"
@@ -29,7 +29,6 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue"
 import html2canvas from "html2canvas"
-const containerRef = ref(null)
 const initData = reactive({
   note1: "",
   note2: "",
@@ -47,12 +46,12 @@ const convert2base64 = (elem: HTMLElement): Promise<string> => {
 }
 
 const convert2Image = async () => {
-  initData.base64img = await convert2base64(containerRef.value)
+  initData.base64img = await convert2base64(document.getElementById("container") as HTMLElement)
   initData.isConvert = true
 }
 
 const exportImage = async () => {
-  const base64img = await convert2base64(containerRef.value)
+  const base64img = await convert2base64(document.getElementById("container") as HTMLElement)
   downloadBase64(base64img, "sgi-teacher.png")
 }
 
