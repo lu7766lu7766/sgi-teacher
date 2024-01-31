@@ -21,7 +21,7 @@
 import { reactive } from "vue"
 import html2canvas from "html2canvas"
 import BG0 from "./components/BG0.vue"
-
+//
 const initData = reactive({
   base64img: "",
   isConvert: false,
