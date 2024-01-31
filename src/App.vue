@@ -1,7 +1,7 @@
 <template>
   <div v-if="!initData.isConvert">
     <div id="container" class="relative">
-      <BG0 />
+      <Bg0 />
     </div>
     <div class="flex justify-center">
       <button type="button" class="bg-gray-400 text-white px-4 py-2 rounded mr-4" @click="exportImage">Export</button>
@@ -20,7 +20,8 @@
 <script setup lang="ts">
 import { reactive } from "vue"
 import html2canvas from "html2canvas"
-import BG0 from "./components/BG0.vue"
+import Bg0 from "./components/Bg0.vue"
+
 //
 const initData = reactive({
   base64img: "",
