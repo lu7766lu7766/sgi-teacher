@@ -10,7 +10,7 @@
   </div>
   <div v-show="isDone">
     <img :src="initData.base64img" />
-    <div class="text-center">轉換完成，請點右鍵或長按另存圖片</div>
+    <div class="text-center mt-4">轉換完成，請點右鍵或長按另存圖片</div>
     <div class="flex justify-center">
       <button type="button" class="bg-green-600 text-white px-4 py-2 rounded mr-4" @click="setDone(false)">編輯</button>
     </div>
@@ -24,7 +24,7 @@ import { useStore } from "@/store"
 import { storeToRefs } from "pinia"
 
 const store = useStore()
-const { isConverting, isDone } = storeToRefs(store)
+const { isDone } = storeToRefs(store)
 const { setConverting, setDone } = store
 //
 const initData = reactive({
