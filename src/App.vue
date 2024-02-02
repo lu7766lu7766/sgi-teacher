@@ -1,31 +1,37 @@
 <template>
-  <div v-if="!initData.isConvert">
+  <div v-show="!initData.isConvert">
     <div id="container" class="relative">
-      <BgTemplate />
+      <initData.currentComponent />
     </div>
-    <div class="flex justify-center">
-      <button type="button" class="bg-gray-400 text-white px-4 py-2 rounded mr-4" @click="exportImage">Export</button>
-      <button type="button" class="bg-gray-400 text-white px-4 py-2 rounded" @click="convert2Image">ToImage</button>
+    <div class="flex justify-center mt-5">
+      <button type="button" class="bg-blue-600 text-white px-4 py-2 rounded mr-4" @click="exportImage">下載</button>
+      <button type="button" class="bg-teal-600 text-white px-4 py-2 rounded" @click="convert2Image">轉成圖片</button>
     </div>
   </div>
-  <div v-else>
+  <div v-show="initData.isConvert">
     <img :src="initData.base64img" />
-    <div class="text-center">請右鍵或長按另存圖片</div>
+    <div class="text-center">轉換完成，請點右鍵或長按另存圖片</div>
     <div class="flex justify-center">
-      <button type="button" class="bg-gray-400 text-white px-4 py-2 rounded mr-4" @click="() => (initData.isConvert = false)">Back</button>
+      <button type="button" class="bg-green-600 text-white px-4 py-2 rounded mr-4" @click="() => (initData.isConvert = false)">編輯</button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue"
+import { reactive, defineAsyncComponent } from "vue"
 import html2canvas from "html2canvas"
-import BgTemplate from "./components/BgTemplate.vue"
 
 //
 const initData = reactive({
   base64img: "",
   isConvert: false,
+  // BGName: "01",
+  // BGs: {
+  //   template: defineAsyncComponent(() => import("./components/BgTemplate.vue")),
+  //   "01": ,
+  // },
+  // currentComponent: defineAsyncComponent(() => import("./components/BgTemplate.vue")),
+  currentComponent: defineAsyncComponent(() => import("./components/Bg01.vue")),
 })
 
 const convert2base64 = (elem: HTMLElement): Promise<string> => {
@@ -70,8 +76,7 @@ const downloadBase64 = (content: string, fileName: string) => {
 }
 </script>
 
-<style scoped lang="sass">
-
+<style lang="sass">
 .input-area
   @apply bg-[#00000000] border-0
 </style>
