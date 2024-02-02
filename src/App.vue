@@ -50,9 +50,9 @@ const convert2Image = async () => {
 }
 
 const exportImage = async () => {
-  await nextTick()
   const base64img = await convert2base64(document.getElementById("container") as HTMLElement)
   downloadBase64(base64img, "sgi-teacher.png")
+  setDone(false)
 }
 
 /** 下载图片 */
