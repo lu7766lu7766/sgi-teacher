@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "html2canvas": "^1.4.1",
+    "localstorage-slim": "^2.7.0",
     "pinia": "^2.1.7",
     "sass": "^1.70.0",
     "vue": "^3.3.11"
