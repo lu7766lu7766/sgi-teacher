@@ -28,7 +28,7 @@ const { setConverting, setDone } = store
 //
 const initData = reactive({
   base64img: "",
-  currentComponent: defineAsyncComponent(() => import("./components/Bg01.vue")),
+  currentComponent: defineAsyncComponent(() => import("./components/Bg02.vue")),
 })
 
 const convert2base64 = (elem: HTMLElement): Promise<string> => {
