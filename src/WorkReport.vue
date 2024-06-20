@@ -93,13 +93,23 @@ const arrayDatas = computed(() =>
     )
   )
 )
-const datas = computed(() =>
-  arrayDatas.value.map((values) => {
+const datas = computed(() => {
+  const indexSet = new Set()
+  const datas = arrayDatas.value.map((values) => {
     return values.reduce((res, value, index) => Object.assign(res, { [titles.value[index]]: value }), {
       max: Math.max(...values.slice(basicLength.value).map((x) => +x)),
     }) as Record<string, string | number>
   })
-)
+  return datas.reduce((res, data) => {
+    const lastIndex = _.findLastIndex(datas, (x) => x[NAME_FIELD_TITLE] == data[NAME_FIELD_TITLE])
+    if (!indexSet.has(lastIndex)) {
+      res.push(datas[lastIndex])
+      indexSet.add(lastIndex)
+    }
+    return res
+  }, [] as Record<string, string | number>[])
+})
+
 const groupByDistDatas = computed(() => _.groupBy(datas.value, DIST_FIELD_TITLE))
 
 // global
@@ -126,7 +136,7 @@ const fetchData = () => {
       if (data.values.length <= 1) {
         data.values.push(mock)
       }
-      sourceDatas.value = data.values
+      sourceDatas.value = data.values.filter((x: any) => x.length)
       basicLength.value = data.values[0].length
     })
     .catch((error) => {
