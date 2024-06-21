@@ -9,7 +9,7 @@ export default createRouter({
     },
     {
       path: "/",
-      component: () => import("./WorkReport.vue"),
+      component: () => import("./WorkReport/index.vue"),
     },
   ],
 })

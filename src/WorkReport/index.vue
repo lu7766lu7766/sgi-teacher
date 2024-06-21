@@ -56,7 +56,8 @@
 <script setup lang="ts">
 import _ from "lodash"
 import { computed, onMounted, ref } from "vue"
-import mock from "./mock/work"
+import mock from "../mock/work"
+import { NAME_FIELD_TITLE, DIST_FIELD_TITLE, TITLES, ART, SEARCH, IMPLEMENT, ENTERPRICE, SOCIAL, NORMAL } from "./titles"
 
 const apiKey = "AIzaSyBmkY7UAH1NyNARMwWo89VV75RIV_7Yuvw"
 const sheetId = "1tjDvAmJrvxKBUnOHdxLcOlHlh-9wztBH0DFZY_t22JE"
@@ -66,37 +67,37 @@ const range = "表單回應!A1:BK999"
 const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`
 
 const groupIndex = [
-  { name: "藝術型", start: 3, end: 13 },
-  { name: "研究型", start: 13, end: 23 },
-  { name: "實做型", start: 23, end: 33 },
-  { name: "企業型", start: 33, end: 43 },
-  { name: "社交型", start: 43, end: 53 },
-  { name: "常規型", start: 53, end: 63 },
+  { name: "藝術型", titles: ART },
+  { name: "研究型", titles: SEARCH },
+  { name: "實做型", titles: IMPLEMENT },
+  { name: "企業型", titles: ENTERPRICE },
+  { name: "社交型", titles: SOCIAL },
+  { name: "常規型", titles: NORMAL },
 ]
-const NAME_FIELD_TITLE = "你的名字"
-const DIST_FIELD_TITLE = "你所屬的區/組織"
+const GROUP_TITLES = groupIndex.map((x) => x.name)
 const LIKE_ANSWER = "喜歡"
 
 // data proccess
 const sourceDatas = ref<string[][]>([[]])
 const basicLength = ref(0)
-const titles = computed(() => sourceDatas.value[0].concat(groupIndex.map((x) => x.name)))
-const arrayDatas = computed(() =>
-  sourceDatas.value.slice(1).map((datas) =>
-    datas.concat(
+const titles = computed(() => TITLES.concat(GROUP_TITLES))
+
+const datas = computed(() => {
+  const indexSet = new Set()
+  const sourceTitles = sourceDatas.value[0].concat(GROUP_TITLES)
+  const titlesIndexByValue = sourceTitles.reduce((res, title, index) => Object.assign(res, { [title]: index }), {} as Record<string, number>)
+  const arrayDatas = sourceDatas.value.slice(1).map((datas) => {
+    return datas.concat(
       groupIndex.map((groupInfo) =>
-        datas
-          .slice(groupInfo.start, groupInfo.end)
+        groupInfo.titles
+          .map((title) => datas[titlesIndexByValue[title]])
           .filter((answer) => answer == LIKE_ANSWER)
           .length.toString()
       )
     )
-  )
-)
-const datas = computed(() => {
-  const indexSet = new Set()
-  const datas = arrayDatas.value.map((values) => {
-    return values.reduce((res, value, index) => Object.assign(res, { [titles.value[index]]: value }), {
+  })
+  const datas = arrayDatas.map((values) => {
+    return values.reduce((res, value, index) => Object.assign(res, { [sourceTitles[index]]: value }), {
       max: Math.max(...values.slice(basicLength.value).map((x) => +x)),
     }) as Record<string, string | number>
   })
