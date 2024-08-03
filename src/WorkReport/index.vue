@@ -62,7 +62,7 @@ import { NAME_FIELD_TITLE, DIST_FIELD_TITLE, TITLES, ART, SEARCH, IMPLEMENT, ENT
 const apiKey = "AIzaSyBmkY7UAH1NyNARMwWo89VV75RIV_7Yuvw"
 const sheetId = "1tjDvAmJrvxKBUnOHdxLcOlHlh-9wztBH0DFZY_t22JE"
 // Sheets 中要取得的資料範圍，格式如下
-const range = "表單回應!A1:BK999"
+const range = "表單回應!A1:BK9999"
 // Sheets API 的 URL
 const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`
 
